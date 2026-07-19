@@ -8,7 +8,7 @@
     "dev": "nodemon app.js",
     "lint": "npx eslint ."
   },
-  "author": "YOUR NAME HERE",
+  "author": "AYOMIKUN",
   "license": "ISC",
   "dependencies": {
     "express": "^4.21.2",
