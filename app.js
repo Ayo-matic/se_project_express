@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const mainRouter = require("./routes/index");
 
 const app = express();
@@ -12,16 +13,8 @@ mongoose
   })
   .catch(console.error);
 
+app.use(cors());
 app.use(express.json());
-
-// Temporary authorization middleware (will be replaced in the next sprint).
-// Replace the _id below with the _id of the test user you create via Postman.
-app.use((req, res, next) => {
-  req.user = {
-    _id: "6a5c7f28eb7c6cd8d7377217",
-  };
-  next();
-});
 
 app.use("/", mainRouter);
 
