@@ -19,8 +19,14 @@ implements JWT-based authentication and authorization.
   an item (owner only), like / unlike items
 - Data validation at the schema level (including email and URL validation
   with the `validator` package)
-- Centralized error status codes (400, 401, 403, 404, 409, 500) with JSON
-  error messages
+- Request-level data validation with `celebrate`/`Joi`, so malformed
+  requests are rejected before they reach the controllers
+- Centralized error handling: custom error classes
+  (`BadRequestError`, `UnauthorizedError`, `ForbiddenError`,
+  `NotFoundError`, `ConflictError`) and a single error-handling
+  middleware at the end of `app.js`
+- Request and error logging with `winston` / `express-winston`
+  (`request.log` and `error.log`)
 - CORS enabled for front-end integration
 
 ## Technologies
@@ -28,6 +34,9 @@ implements JWT-based authentication and authorization.
 - Node.js / Express.js
 - MongoDB / Mongoose
 - bcryptjs (password hashing) / jsonwebtoken (JWT auth)
+- celebrate / Joi (request validation)
+- winston / express-winston (logging)
+- dotenv (environment variables)
 - ESLint (Airbnb base config) + Prettier
 
 ## Running the Project
@@ -38,10 +47,21 @@ implements JWT-based authentication and authorization.
 
 `npm run lint` — run the linter
 
-## Authentication
+## Environment Variables
 
-Set the `JWT_SECRET` environment variable in production to a strong,
-private value. In development, a fallback secret is used automatically.
+This project uses `dotenv` to load configuration from a `.env` file
+(never committed — see `.gitignore`). Create a `.env` file in the project
+root with:
+
+```
+NODE_ENV=production
+JWT_SECRET=<a strong, random 256-bit key>
+```
+
+In development, if `JWT_SECRET` isn't set, a fallback secret is used
+automatically.
+
+## Authentication
 
 Protected routes expect an `Authorization: Bearer <token>` header. The
 following routes do not require authentication:
@@ -49,3 +69,13 @@ following routes do not require authentication:
 - `POST /signup`
 - `POST /signin`
 - `GET /items`
+
+## Deployment
+
+- **Domain name:** (https://ayomatic.duckdns.org)
+- **Frontend repo:** (https://github.com/Ayo-matic/se_project_react.git)
+- **Project pitch video:** 
+
+The app is deployed on a Google Cloud VM, served through nginx (reverse
+proxy + HTTPS via Certbot), and kept running with the PM2 process
+manager.
