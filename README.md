@@ -72,9 +72,10 @@ following routes do not require authentication:
 
 ## Deployment
 
-- **Domain name:** (https://ayomatic.duckdns.org)
-- **Frontend repo:** (https://github.com/Ayo-matic/se_project_react.git)
-- **Project pitch video:** 
+## Deployment
+
+- **Deployed backend domain:** https://ayomatic.duckdns.org
+- **Frontend repository:** https://github.com/Ayo-matic/se_project_react
 
 The app is deployed on a Google Cloud VM, served through nginx (reverse
 proxy + HTTPS via Certbot), and kept running with the PM2 process
